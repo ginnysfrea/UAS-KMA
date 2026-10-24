@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>UAS Ilmu Hadits</title>
+<style>
+:root{--bg:#f6f7f4;--card:#fff;--tx:#1d2b24;--mu:#5d6b64;--pr:#1f6b4f;--ok:#1b7a43;--okb:#e3f4ea;--no:#b3261e;--nob:#fbe9e7;--bd:#d9ded9;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141a17;--card:#1e2723;--tx:#e8eee9;--mu:#9aa8a0;--pr:#4cb98c;--ok:#6fd49a;--okb:#18321f;--no:#ff8a80;--nob:#3a1d1a;--bd:#33403a}}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+.w{max-width:760px;margin:0 auto;padding:16px}
+header{background:var(--pr);color:#fff;border-radius:14px;padding:20px;margin-bottom:16px}
+header h1{margin:0 0 8px;font-size:1.35rem}header p{margin:2px 0;opacity:.95;font-size:.95rem}
+.c{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:16px;margin-bottom:14px}
+h2{font-size:1.1rem;margin:20px 0 10px}label{display:block;font-weight:600;margin:10px 0 4px}
+input[type=text],textarea{width:100%;padding:10px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);font:inherit}
+textarea{min-height:90px;resize:vertical}
+.o{display:flex;gap:8px;align-items:flex-start;padding:8px 10px;border:1px solid var(--bd);border-radius:8px;margin:6px 0;cursor:pointer}
+.o input{margin-top:5px}
+button{background:var(--pr);color:#fff;border:0;border-radius:10px;padding:12px 22px;font:inherit;font-weight:600;cursor:pointer;margin-top:8px}
+.q{font-weight:600;margin:0 0 8px}.r{margin-top:10px;padding:10px;border-radius:8px;font-size:.95rem}
+.ok{background:var(--okb);color:var(--ok)}.no{background:var(--nob);color:var(--no)}
+.big{font-size:2.6rem;font-weight:700;color:var(--pr);margin:0}.mu{color:var(--mu);font-size:.9rem}
+.hide{display:none}
+</style></head><body><div class="w">
+<header><h1>Ujian Akhir Semester (UAS)</h1>
+<p>Mata Kuliah: Ilmu Hadits</p><p>Semester: 1 (Ganjil)</p><p>Waktu Pelaksanaan: Kamis, 29 Oktober 2026</p></header>
+
+<div id="s1" class="c"><h2 style="margin-top:0">Data Mahasiswa</h2>
+<label for="nm">Nama</label><input type="text" id="nm" autocomplete="name">
+<label for="nim">Nomor Induk Mahasiswa</label><input type="text" id="nim" inputmode="numeric">
+<p class="mu">20 soal pilihan ganda (2,5 poin) + 10 soal essay (5 poin) = 100 poin. Skor dan pembahasan tampil setelah Anda mengirim jawaban.</p>
+<button id="go">Mulai Ujian</button></div>
+
+<form id="s2" class="hide" onsubmit="return false"><div id="qs"></div>
+<button id="fin" type="button">Kirim Jawaban</button></form>
+<div id="s3" class="hide"></div>
+</div>
+<script>
+const M=[
+["Manakah yang BUKAN persyaratan hadits shahih?",["Sanadnya bersambung","Perawinya adil dan dhabith","Terhindar dari syadz dan ‘illat","Seluruh perawinya berasal dari satu kota"],3],
+["Apa yang dimaksud dengan sifat ‘adalah pada perawi hadits?",["Memiliki hafalan paling kuat","Memiliki integritas agama dan akhlak yang terjaga","Mampu menulis seluruh hadits","Memiliki banyak murid"],1],
+["Perbedaan utama hadits shahih dan hasan terletak pada ....",["Ketersambungan sanad","Jumlah kitab yang meriwayatkan","Tingkat ketelitian atau dhabth perawi","Ada atau tidaknya matan"],2],
+["Hadits dhaif adalah hadits yang ....",["Pasti palsu","Tidak memenuhi satu atau lebih persyaratan hadits maqbul","Tidak ditemukan dalam Al-Qur’an","Hanya diriwayatkan oleh satu orang"],1],
+["Hadits yang sanadnya terputus karena seorang perawi gugur di tengah sanad disebut ....",["Mursal","Munqathi’","Mutawatir","Musalsal"],1],
+["Hadits mursal menurut istilah ilmu hadits adalah hadits yang ....",["Diriwayatkan sahabat dari sahabat lain","Tabi’in langsung menyandarkan hadits kepada Nabi Muhammad ﷺ","Diriwayatkan banyak perawi pada setiap tingkatan","Memiliki perawi yang dituduh berdusta"],1],
+["Yang dimaksud hadits syadz adalah ....",["Hadits yang diriwayatkan melalui banyak jalur","Riwayat perawi maqbul yang menyelisihi riwayat yang lebih kuat","Hadits yang hanya berisi nasihat","Hadits yang tidak memiliki terjemahan"],1],
+["Yang dimaksud ‘illat dalam kritik hadits adalah ....",["Kekeliruan tersembunyi yang dapat merusak kualitas hadits","Perbedaan bahasa dalam terjemahan","Panjang pendeknya matan","Nama lain dari sahabat"],0],
+["Hadits hasan li ghairihi adalah hadits yang ....",["Sejak awal memenuhi seluruh syarat shahih tertinggi","Dhaif ringan yang menguat karena jalur periwayatan lain yang layak","Pasti palsu tetapi populer","Tidak memiliki sanad sama sekali"],1],
+["Pernyataan paling tepat tentang hadits shahih dan hasan ....",["Keduanya termasuk maqbul apabila memenuhi kriterianya","Keduanya selalu lebih lemah daripada dhaif","Hadits hasan pasti palsu","Hadits shahih tidak memerlukan sanad"],0],
+["Apa yang dimaksud dengan sanad dalam ilmu hadits?",["Isi atau teks hadits","Rangkaian perawi yang menyampaikan hadits","Penjelasan ulama tentang hadits","Terjemahan hadits"],1],
+["Objek utama kritik sanad adalah ....",["Keindahan bahasa Arab saja","Biografi, keadilan, ketelitian perawi, dan kesinambungan sanad","Jumlah halaman kitab","Warna sampul kitab hadits"],1],
+["Ilmu yang membahas penilaian kredibilitas perawi, baik pujian maupun kritik, disebut ....",["Ilmu balaghah","Ilmu faraidh","Ilmu jarh wa ta’dil","Ilmu arudh"],2],
+["Dalam penelitian sanad, istilah ittishal sanad berarti ....",["Sanad yang bersambung","Sanad yang sangat panjang","Sanad yang seluruh perawinya tidak dikenal","Sanad yang tidak dicantumkan"],0],
+["Yang dimaksud matan hadits adalah ....",["Nama seluruh perawi","Rangkaian nama guru penyusun kitab","Teks atau isi riwayat yang disampaikan oleh sanad","Tahun wafat perawi"],2],
+["Salah satu cara mengkritik matan hadits adalah ....",["Mengabaikan semua riwayat pembanding","Membandingkan dengan riwayat lain yang lebih kuat dan meneliti kemungkinan kejanggalan","Menilai berdasarkan popularitas saja","Menerima setiap teks tanpa penelitian"],1],
+["Jika perawi terbukti sering keliru dalam periwayatan, aspek yang terutama diteliti adalah ....",["Dhabth atau ketelitian perawi","Tempat pencetakan kitab","Jumlah terjemahan hadits","Panjang matan"],0],
+["Mengapa kritik sanad dan matan dilakukan bersama-sama?",["Karena sanad saja selalu cukup","Karena matan saja selalu menentukan kesahihan","Agar kualitas riwayat dinilai menyeluruh melalui jalur periwayatan dan isinya","Agar semua hadits dinilai dhaif"],2],
+["Jika suatu matan tampak bertentangan dengan riwayat lain yang lebih kuat, sebaiknya ....",["Langsung menyatakan semua riwayat palsu","Meneliti sanad, variasi redaksi, konteks, kemungkinan kompromi, dan penilaian ulama","Menghapus riwayat yang tidak disukai","Menentukan kualitas hanya dari terjemahan"],1],
+["Contoh sikap ilmiah dalam takhrij dan kritik hadits adalah ....",["Menyebarkan hadits tanpa sumber","Menganggap setiap hadits di media sosial shahih","Mencantumkan sumber, menelusuri jalur sanad, dan merujuk penilaian ulama dengan cermat","Menentukan shahih hanya berdasarkan isi yang terasa baik"],2]];
+const E=[
+["Apa yang dimaksud dengan hadits shahih? Sebutkan lima syaratnya!","Hadits shahih memenuhi lima syarat: sanad bersambung, perawi adil, perawi dhabith (teliti hafalan/catatan), tidak syadz, dan tidak mengandung ‘illah yang merusak.",["bersambung","adil","dhabith","syadz","illa"],4],
+["Apa yang dimaksud dengan hadits hasan dan apa perbedaannya dengan shahih?","Hadits hasan: sanad bersambung, perawi adil, tidak syadz dan tidak ber-‘illah merusak, tetapi ketelitian (dhabith) perawinya berada di bawah perawi hadits shahih.",["bersambung","adil","dhabith","bawah","syadz"],3],
+["Apa yang dimaksud dengan hadits dhaif dan apa penyebabnya?","Hadits dhaif adalah hadits yang tidak memenuhi satu atau lebih syarat hadits shahih atau hasan, misalnya sanad terputus, perawi lemah hafalan, perawi majhul, atau ada cacat lain.",["tidak memenuhi","syarat","shahih","hasan"],3],
+["Apakah hadits dhaif sama dengan hadits maudhu’? Jelaskan!","Tidak sama. Dhaif adalah riwayat yang tidak memenuhi syarat shahih/hasan, sedangkan maudhu’ adalah riwayat buatan yang dinisbatkan secara dusta kepada Nabi saw.",["tidak sama","dhaif","maudhu","dibuat","dusta"],3],
+["Jelaskan perbedaan hasan li dzatihi dan hasan li ghairihi!","Hasan li dzatihi memenuhi syarat hasan berdasarkan kualitas sanad dan perawinya sendiri. Hasan li ghairihi awalnya dhaif ringan, lalu naik menjadi hasan karena ada jalur lain yang mendukung.",["dzatihi","ghairihi","sanad","dhaif","jalur"],3],
+["Apa yang dimaksud dengan takhrij hadits?","Takhrij hadits adalah kegiatan menelusuri hadits ke sumber aslinya, mengidentifikasi kitab periwayatnya, menghimpun jalur sanad dan redaksi matannya, serta membantu mengetahui kualitasnya berdasarkan penelitian ulama.",["menelusur","sumber","kitab","sanad","matan","kualitas"],3],
+["Apa yang dimaksud dengan kritik sanad dan aspek apa saja yang diperiksa?","Kritik sanad adalah penelitian terhadap rangkaian perawi hadits. Yang diperiksa: kesinambungan sanad, keadilan perawi, ketelitian (dhabith), ada tidaknya syadz, dan ada tidaknya ‘illah yang merusak.",["perawi","bersambung","adil","dhabith","syadz","illa"],3],
+["Apa yang dimaksud dengan kritik matan dan bagaimana caranya?","Kritik matan adalah penelitian terhadap isi/teks hadits: membandingkan redaksi antar jalur, memeriksa penambahan/pengurangan/kekeliruan, menilai pertentangan nyata dengan Al-Qur’an atau hadits yang lebih kuat, serta memeriksa konteks dan makna.",["isi","teks","redaksi","banding","quran","konteks"],3],
+["Apa yang dimaksud ittishal as-sanad dan bagaimana cara memeriksanya?","Ittishal as-sanad adalah kesinambungan sanad: setiap perawi menerima hadits dari perawi sebelumnya. Diperiksa melalui tahun lahir/wafat, kesezamanan, hubungan guru-murid, bentuk periwayatan (haddatsana, akhbarana, ‘an), dan penilaian ulama.",["bersambung","perawi","guru","murid","lahir","wafat","sezaman"],3],
+["Jelaskan pengertian hadits syadz dan ‘illah!","Hadits syadz adalah riwayat perawi maqbul yang menyelisihi riwayat perawi lain yang lebih kuat. ‘Illah adalah cacat tersembunyi yang memengaruhi kualitas hadits meskipun sanad/matannya tampak baik.",["syadz","maqbul","menyelisihi","lebih kuat","illa","cacat","tersembunyi"],4]];
+const SCRIPT_URL='https://script.google.com/macros/s/AKfycbw-J6kPB_NMTCEiDt6fiUFWSiiHKL5yy5aAfbqg51cdwr41zYk-s8KOSWQdhDzvZhOz/exec';
+const $=i=>document.getElementById(i),n=s=>s.toLowerCase().replace(/[^a-z ]/g,'').replace(/\s+/g,' ');
+$('go').onclick=()=>{if(!$('nm').value.trim()||!$('nim').value.trim()){alert('Isi Nama dan Nomor Induk Mahasiswa terlebih dahulu.');return}
+$('s1').classList.add('hide');$('s2').classList.remove('hide');window.scrollTo(0,0)};
+let h='<h2>A. Pilihan Ganda (20 soal × 2,5 poin)</h2>';
+M.forEach((m,i)=>{h+=`<div class="c"><p class="q">${i+1}. ${m[0]}</p>`+m[1].map((o,j)=>`<label class="o"><input type="radio" name="m${i}" value="${j}"><span>${'ABCD'[j]}. ${o}</span></label>`).join('')+`<div id="rm${i}"></div></div>`});
+h+='<h2>B. Essay (10 soal × 5 poin)</h2>';
+E.forEach((e,i)=>{h+=`<div class="c"><p class="q">${i+1}. ${e[0]}</p><textarea id="e${i}"></textarea><div id="re${i}"></div></div>`});
+$('qs').innerHTML=h;
+$('fin').onclick=()=>{
+const un=M.filter((_,i)=>!document.querySelector(`input[name=m${i}]:checked`)).length;
+if(un&&!confirm(un+' soal PG belum dijawab. Tetap kirim?'))return;
+let pg=0,es=0;
+M.forEach((m,i)=>{const s=document.querySelector(`input[name=m${i}]:checked`),ok=s&&+s.value===m[2];if(ok)pg+=2.5;
+$('rm'+i).innerHTML=ok?'<div class="r ok">✔ Jawaban benar</div>':`<div class="r no">✘ Jawaban salah. Jawaban benar: ${'ABCD'[m[2]]}. ${m[1][m[2]]}</div>`});
+E.forEach((e,i)=>{const t=n($('e'+i).value),hit=e[2].filter(k=>t.includes(k)).length,ok=hit>=e[3];if(ok)es+=5;
+$('re'+i).innerHTML=(ok?'<div class="r ok">✔ Jawaban benar</div>':'<div class="r no">✘ Jawaban salah</div>')+`<div class="r" style="background:var(--bg)"><b>Jawaban yang benar:</b> ${e[1]}</div>`;$('e'+i).disabled=true});
+document.querySelectorAll('input[type=radio]').forEach(x=>x.disabled=true);$('fin').classList.add('hide');
+const tot=pg+es;
+$('s3').innerHTML=`<div class="c" style="text-align:center"><p class="mu">${$('nm').value} — NIM ${$('nim').value}</p><p class="big">${tot}</p><p>dari 100 poin</p><p class="mu">PG: ${pg} / 50 &nbsp;|&nbsp; Essay: ${es} / 50</p><p class="mu">Skor essay dihitung otomatis berdasarkan kata kunci; dosen dapat meninjau ulang jawaban essay.</p></div>`;
+const P=M.map((m,i)=>{const x=document.querySelector(`input[name=m${i}]:checked`);return x?'ABCD'[x.value]+(+x.value===m[2]?' ✔':' ✘'):'-'});
+const Es=E.map((e,i)=>{const v=$('e'+i).value.trim(),t=n(v);return (e[2].filter(k=>t.includes(k)).length>=e[3]?'✔ ':'✘ ')+v});
+const st=document.createElement('p');st.className='mu';st.id='st';st.textContent='Menyimpan hasil…';$('s3').firstChild.appendChild(st);
+if(SCRIPT_URL.startsWith('http')){fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({nama:$('nm').value.trim(),nim:$('nim').value.trim(),pg:pg,essay:es,total:tot,p:P,e:Es})}).then(()=>{st.textContent='✔ Hasil Anda telah terkirim ke dosen.'}).catch(()=>{st.textContent='⚠ Gagal terkirim. Mohon tangkap layar halaman ini dan kirim ke dosen.'})}else{st.textContent='(Mode uji: URL penyimpanan belum diisi, hasil tidak dikirim.)'}
+$('s3').classList.remove('hide');$('s2').insertBefore($('s3'),$('s2').firstChild);$('s2').classList.remove('hide');$('qs').before($('s3'));window.scrollTo(0,0)};
+</script></body></html>
