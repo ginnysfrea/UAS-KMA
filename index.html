@@ -70,7 +70,7 @@ const E=[
 ["Jelaskan pengertian hadits syadz dan ‘illah!","Hadits syadz adalah riwayat perawi maqbul yang menyelisihi riwayat perawi lain yang lebih kuat. ‘Illah adalah cacat tersembunyi yang memengaruhi kualitas hadits meskipun sanad/matannya tampak baik.",[["syadz", "menyelisihi", "illa", "tersembunyi"], ["maqbul", "lebih kuat", "cacat", "kualitas"]]]];
 const mt=(t,k)=>k.length<=3?(' '+t+' ').includes(' '+k+' '):t.includes(k);
 const S=(e,v)=>{const t=n(v),P=e[2].filter(k=>mt(t,k)),Q=e[3].filter(k=>mt(t,k));return [Math.round(5*(2*P.length+Q.length)/(2*e[2].length+e[3].length)*10)/10,P.concat(Q)]};
-const SCRIPT_URL='PASTE_URL_APPS_SCRIPT_DI_SINI';
+const SCRIPT_URL='https://script.google.com/macros/s/AKfycbw-J6kPB_NMTCEiDt6fiUFWSiiHKL5yy5aAfbqg51cdwr41zYk-s8KOSWQdhDzvZhOz/exec';
 const $=i=>document.getElementById(i),n=s=>s.toLowerCase().replace(/[^a-z ]/g,'').replace(/\s+/g,' ');
 $('go').onclick=()=>{if(!$('nm').value.trim()||!$('nim').value.trim()){alert('Isi Nama dan Nomor Induk Mahasiswa terlebih dahulu.');return}
 $('s1').classList.add('hide');$('s2').classList.remove('hide');window.scrollTo(0,0)};
