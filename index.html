@@ -37,7 +37,7 @@ button{background:var(--pr);color:#fff;border:0;border-radius:10px;padding:12px 
 <button id="fin" type="button">Kirim Jawaban</button><p id="err" class="mu"></p></form>
 <div id="s4" class="c hide" style="text-align:center"><h2 style="margin-top:0">Jawaban Terkirim ✔</h2>
 <p>Skor akan diumumkan setelah diperiksa dosen. Simpan kode cek Anda (tangkap layar):</p>
-<p class="kode" id="kd"></p><p class="mu">Gunakan NIM dan kode ini pada menu <b>Cek Nilai</b> di halaman awal.</p></div>
+<p class="kode" id="kd"></p><p class="mu">Gunakan NIM dan kode ini pada menu <b>Cek Nilai</b> di halaman awal.</p><button id="cek1">Cek Nilai</button></div>
 <div id="s3" class="hide"></div></div>
 <script>
 const SCRIPT_URL='https://script.google.com/macros/s/AKfycbzrSx2P4u7ohQ8AIzjJqrc4csp-PrCpfe_2PwS05v4GJbUkN7L2SQm0_5pSjGGbzpY/exec';
@@ -49,7 +49,7 @@ const show=id=>{['s1','sc','s2','s4','s3'].forEach(x=>$(x).classList.toggle('hid
 const ready=()=>SCRIPT_URL.startsWith('http');
 const post=b=>fetch(SCRIPT_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify(b)}).then(r=>r.json());
 $('go').onclick=()=>{if(!$('nm').value.trim()||!$('nim').value.trim()){alert('Isi Nama dan Nomor Induk Mahasiswa terlebih dahulu.');return}show('s2')};
-$('cek0').onclick=()=>show('sc');$('bk').onclick=()=>show('s1');
+$('cek0').onclick=()=>show('sc');$('cek1').onclick=()=>{$('nim2').value=$('nim').value.trim();$('kd2').value=$('kd').textContent;$('msg').textContent='';show('sc')};$('bk').onclick=()=>show('s1');
 let h='<h2>A. Pilihan Ganda (20 soal × 2,5 poin)</h2>';
 M.forEach((m,i)=>{h+=`<div class="c"><p class="q">${i+1}. ${m[0]}</p>`+m[1].map((o,j)=>`<label class="o"><input type="radio" name="m${i}" value="${j}"><span>${L[j]}. ${o}</span></label>`).join('')+'</div>'});
 h+='<h2>B. Essay (10 soal × 5 poin)</h2>';
